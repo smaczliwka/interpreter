@@ -1,0 +1,307 @@
+Gramatyka
+
+-- programs ------------------------------------------------
+
+entrypoints Program ;
+
+Program.   Program ::= [Stmt] ;
+
+-- functions -----------------------------------------------
+
+separator FDecl "" ;
+
+FDecl.	   FDecl ::= "func" Type Ident "(" [Arg] ")" Block ;
+
+ArgCp. 	   Arg ::= Type Ident;
+
+ArgRef.    Arg ::= Type "&" Ident;
+
+separator  Arg "," ;
+
+-- variables -----------------------------------------------
+
+separator VDecl "";
+
+VDecl.      VDecl ::= Type [Item] ";" ;
+
+separator nonempty Item "," ;
+
+NoInit.    Item ::= Ident ; 
+
+Init.      Item ::= Ident "=" Expr ;
+
+-- statements ----------------------------------------------
+
+separator  Stmt "" ;
+
+Block.     Block ::= "{" [VDecl] [FDecl] [Stmt] "}" ;
+
+Empty.     Stmt ::= ";" ;
+
+BStmt.     Stmt ::= Block ;
+
+Ass.       Stmt ::= Ident "=" Expr  ";" ;
+
+Incr.      Stmt ::= Ident "++"  ";" ;
+
+Decr.      Stmt ::= Ident "--"  ";" ;
+
+Ret.       Stmt ::= "return" Expr ";" ;
+
+VRet.      Stmt ::= "return" ";" ;
+
+Cond.      Stmt ::= "if" "(" Expr ")" Block  ;
+
+CondElse.  Stmt ::= "if" "(" Expr ")" Block "else" Block  ;
+
+While.     Stmt ::= "while" "(" Expr ")" Stmt ;
+
+SExp.      Stmt ::= Expr  ";" ;
+
+-- Types ---------------------------------------------------
+
+Int.       Type ::= "int" ;
+
+Str.       Type ::= "string" ;
+
+Bool.      Type ::= "bool" ;
+
+Void.      Type ::= "void" ;
+
+-- Expressions ---------------------------------------------
+
+EVar.      Expr6 ::= Ident ;
+
+ELitInt.   Expr6 ::= Integer ;
+
+ELitTrue.  Expr6 ::= "true" ;
+
+ELitFalse. Expr6 ::= "false" ;
+
+EApp.      Expr6 ::= Ident "(" [Expr] ")" ;
+
+EString.   Expr6 ::= String ;
+
+Neg.       Expr5 ::= "-" Expr6 ;
+
+Not.       Expr5 ::= "!" Expr6 ;
+
+EMul.      Expr4 ::= Expr4 MulOp Expr5 ;
+
+EAdd.      Expr3 ::= Expr3 AddOp Expr4 ;
+
+ERel.      Expr2 ::= Expr2 RelOp Expr3 ;
+
+EAnd.      Expr1 ::= Expr2 "&&" Expr1 ;
+
+EOr.       Expr ::= Expr1 "||" Expr ;
+
+coercions  Expr 6 ;
+
+separator  Expr "," ;
+
+-- operators -----------------------------------------------
+
+Plus.      AddOp ::= "+" ;
+
+Minus.     AddOp ::= "-" ;
+
+Times.     MulOp ::= "*" ;
+
+Div.       MulOp ::= "/" ;
+
+Mod.       MulOp ::= "%" ;
+
+LTH.       RelOp ::= "<" ;
+
+LE.        RelOp ::= "<=" ;
+
+GTH.       RelOp ::= ">" ;
+
+GE.        RelOp ::= ">=" ;
+
+EQU.       RelOp ::= "==" ;
+
+NE.        RelOp ::= "!=" ;
+
+-- comments ------------------------------------------------
+
+comment    "#" ;
+
+comment    "//" ;
+
+comment    "/*" "*/" ;
+
+
+Język imperatywny wzorowany na języku Latte z pewnymi uproszczeniami zapożyczonymi z Tiny i pewnymi rozszerzeniami.
+
+W odróżnieniu od Latte program jest listą instrukcji (tak jak w Tiny).
+Deklaracje funkcji i zmiennych mogą występować tylko na początku bloku, przy czym najpierw następuje ciąg deklaracji zmiennych,
+a potem ciąg deklaracji funkcji.
+Identyfikatory zmiennych i funkcji mają widoczność blokową. Obowiązuje statyczne wiązanie i standardowe reguły przesłaniania.
+Obowiązuje statyczne typowanie tj. zawsze terminująca faza kontroli typów przed rozpoczęciem wykonania programu (typechecker).
+{
+    int x = 21;
+    func int f() {
+        return x;
+    }
+    {
+        int x = 37;
+        int y = f();
+        // tu y = 21, x = 37
+    }
+}
+
+Typy
+Cztery typy: int, string, bool i void.
+Nie ma konwersji pomiędzy typami.
+
+Zmienne
+Każda zmienna musi być zadeklarowana przed użyciem.
+Można jednocześnie deklarować kilka zmiennych tego samego typu:
+{
+    int x, y = 5, z;
+}
+Jeśli zmienna nie jest jawnie inicjalizowana w momencie deklaracji, jest inicjalizowana wartością domyślną
+(0 dla int, "" dla string, false dla bool).
+Zmienne zadeklarowane w bloku nie są widoczne poza nim i przesłaniają zmienne o tej samej nazwie spoza bloku.
+W przypadku zadeklarowania kilku zmiennych o tej samej nazwie w jednym bloku obowiązuje ostatnia deklaracja.
+{
+    int x = 5;
+    string x = "ala;
+    // tu x = "ala"
+}
+
+{
+    {
+        int x = 7;
+    }
+    printInt(x); // error: undefined variable x
+}
+Zmienne są statycznie typowane. Nie można przypisać na zmienną wartości innego niż jej typ, ani zmienić typu zmiennej po
+zadeklarowaniu. Można za to wewnątrz bloku zadeklarować zmienną innego typu o tym samym identyfikatorze, która przysłoni poprzednią.
+{
+    int x;
+    {
+        x = "ala"; // error
+    }
+    {
+        string x = "ala"; // OK
+    }
+}
+
+Funkcje
+Na deklarację funkcji składa się słowo kluczowe func, typ zwracanej wartości, nazwa, lista argumentów oraz ciało.
+Nazwy argumentów muszą być unikalne, tzn. deklaracja func void f(int x, bool x) {...} skutkuje błędem typowania.
+Funkcje zadeklarowane w bloku nie są widoczne poza nim i przesłaniają funkcje o tej samej nazwie spoza bloku.
+W przypadku zadeklarowania kilku funkcji o tej samej nazwie w jednym bloku obowiązuje ostatnia deklaracja.
+Zmienna i funkcja o tej samej nazwie mogą współistnieć w obrębie tego samego bloku i są rozróżnialne.
+Istnieją dwa sposoby przekazywania do funkcji argumentów: przez wartość (int x) i przez referencję (int& x).
+W przypadku przekazywania przez wartość argumentem wywołania funkcji może być dowolne wyrażenie.
+W przypadku przekazywania przez referencję argumentem wywołania powinna być nazwa zmiennej widocznej w miejscu wywołania.
+W przeciwnym wypadku następuje błąd typowania.
+Argumenty funkcji zachowują się wewnątrz ciała funkcji jak zmienne lokalne. Przypisania na nie są dozwolone.
+{
+    int x = 7;
+    int y = 5;
+    func int f(int x) {
+        x = 2;
+        return x;
+    }
+    f(y); // zwróci 2
+    // tu nadal y = 5
+}
+Wszystkie funkcje muszą zwracać wartość odpowiedniego typu za pomocą instrukcji return.
+Instrukcje znajdujące się w ciele funkcji po return nie zostaną wykonane.
+Funkcje mogą być rekurencyjnie (tzn. może występować odwołanie do funkcji w jej własnym ciele).
+Poza przypadkiem rekurencji każda funkcja musi być zadeklarowana przed użyciem.
+Mogą istnieć funkcje zagnieżdżone, tzn. w bloku ciała funkcji można zadeklarować inną funkcję,
+która nie będzie widoczna poza tym blokiem.
+{
+    func int f(int x) {
+        func int g(int y) {
+            return y + 7;
+        }
+        return g(x);
+        printInt(x); // ta instrukcja nie zostanie wykonana.
+    }
+    printInt(f(1));
+}
+
+Instrukcje
+Instrukcje: pusta, złożona, if (z else i bez else), while, return jak w C/Javie.
+Instrukcja return; poza ciałem funkcji przerywa wykonanie programu.
+Return z wartością innego typu niż void poza ciałem funkcji skutkuje błędem typowania.
+Jeśli wyrażenie w warunku instrukcji if ewaluuje się do wartości innego typu niż bool, następuje błąd typowania.
+if (2 + 2) { // sparsuje się poprawnie, ale nastąpi błąd typowania
+    x = 7;
+}
+Dodatkowo instrukcjami są przypisanie, inkrementacja, dekrementacja. L-wartościami są tylko zmienne.
+
+Aby uniknąć niejednoznaczności w konstrukcjach typu:
+if (x > 0)
+if (x > 0) return 1;
+else return 0; // do którego ifa jest ten else?
+w odróżnieniu od Latte po warunku w instrukcji if wymuszone jest użycie bloku {...}
+
+Wyrażenia
+Podzbiór zbioru wyrażeń dostępnych w Javie. Wywołania funkcji są dopuszczone jako elementy wyrażeń,
+zatem wyrażenia mogą modyfikować stan pamięci. Ewaluacja następuje od lewej do prawej, chyba że priorytet
+operatorów wskazuje inaczej.
+{
+    int x = 7;
+    func int f() {
+        return 42;
+    }
+    x = f() + 1;
+}
+Wyrażenia logiczne zwracają typ boolean i są obliczane leniwie
+(drugi argument nie jest wyliczany gdy pierwszy determinuje wartość wyrażenia).
+{   
+    bool b = true;
+    int x;
+    func bool f() {
+        1 / 0;
+        return true;
+    }
+    if (b || f()) {
+        x = 7; // ponieważ b = true nie dojdzie do dzielenia przez 0 i program wykona się poprawnie
+    }
+}
+
+Obsługa błędów
+Napotkanie błędu wykonania skutkuje zatrzymaniem programu i wypisaniem stosownego komunikatu (np. error: division by 0),
+zamiast wywołania błędu z Haskella.
+
+Komentarze
+Tak jak w Latte, są trzy sposoby umieszczania komentarzy w kodzie programu.
+
+Wypisywanie
+Tak jak w Latte, w środowisku są dostępne predefiniowane funkcje, które można lokalnie nadpisać.
+void printInt(int)
+void printString(string)
+void printBool(bool)
+
+  Na 15 punktów
++ 01 (trzy typy)
++ 02 (literały, arytmetyka, porównania)
++ 03 (zmienne, przypisanie)
++ 04 (print)
++ 05 (while, if)
++ 06 (funkcje lub procedury, rekurencja)
++ 07 (przez zmienną / przez wartość / in/out)
+  08 (zmienne read-only i pętla for)
+  Na 20 punktów
++ 09 (przesłanianie i statyczne wiązanie)
++ 10 (obsługa błędów wykonania)
++ 11 (funkcje zwracające wartość)
+  Na 30 punktów
++ 12 (4) (statyczne typowanie)
++ 13 (2) (funkcje zagnieżdżone ze statycznym wiązaniem)
+  14 (1/2) (rekordy/listy/tablice/tablice wielowymiarowe)
+  15 (2) (krotki z przypisaniem)
+  16 (1) (break, continue)
+  17 (4) (funkcje wyższego rzędu, anonimowe, domknięcia)
+  18 (3) (generatory)
+
+Razem: 26
