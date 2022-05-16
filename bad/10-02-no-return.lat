@@ -4,7 +4,7 @@
             return;
         }
         else {
-            printStr("xd");
+            printStr("xd\n");
         }
     }
     {

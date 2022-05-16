@@ -1,0 +1,3 @@
+printInt(7);
+printStr("alamakota")
+printInt(17);

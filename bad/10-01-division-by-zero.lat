@@ -2,6 +2,7 @@
     int x = 10;
     while (true) {
         printInt(100 / x);
+        printStr("\n");
         x--;
     }
 }

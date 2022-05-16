@@ -1,0 +1,7 @@
+{
+    int x = 7;
+    func void f() {
+        return;
+    }
+    int y = 17;
+}

@@ -1,0 +1,8 @@
+{
+    func void f() {
+        return;
+    }
+}
+func int g() {
+    return 7;
+}
