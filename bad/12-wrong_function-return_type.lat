@@ -1,0 +1,6 @@
+{
+    bool y = false;
+    func int x() {
+        return y;
+    }
+}

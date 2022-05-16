@@ -1,0 +1,21 @@
+{
+    func string g() {
+        return "g1";
+    }
+    func void f() {
+        func string h() {
+            return g();
+        }
+        func string g() {
+            return "g2";
+        }
+        func string i() {
+            return g();
+        }
+        printStr(h());
+        printStr(i());
+        return;
+    }
+    f();
+    printStr(g());
+}

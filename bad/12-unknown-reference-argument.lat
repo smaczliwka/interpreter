@@ -1,0 +1,6 @@
+{
+    func bool f(int& x) {
+        return true;
+    }
+    f(y);
+}

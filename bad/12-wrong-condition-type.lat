@@ -1,0 +1,6 @@
+{
+    int x = 7;
+    while (x) {
+        return;
+    }
+}

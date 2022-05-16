@@ -1,0 +1,13 @@
+{
+    int a = 0, b = 0;
+    func void f(int x, int& y, int z) {
+        x++;
+        y++;
+        printInt(x);
+        printInt(y);
+        return;
+    }
+    f(a, b, a + b + 7);
+    printInt(a);
+    printInt(b);
+}

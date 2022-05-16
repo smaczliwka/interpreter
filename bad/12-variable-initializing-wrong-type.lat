@@ -1,0 +1,4 @@
+{
+    int a, b = 7, c;
+    bool x = (a > b), y = "ala";
+}

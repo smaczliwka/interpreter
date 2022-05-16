@@ -1,0 +1,16 @@
+{
+    int x = 21;
+    int x = 37;
+    func int f(int y) {
+        return 10 * y;
+    }
+    printInt(x);
+    {
+        int x = x + 1;
+        func int f(int z) {
+            return 100 * z;
+        }
+        printInt(f(x));
+    }
+    printInt(f(x));
+}

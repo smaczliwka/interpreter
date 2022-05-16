@@ -1,0 +1,17 @@
+printBool(true > false);
+printBool(true >= false);
+printBool(true < false);
+printBool(true <= false);
+printBool(true == false);
+printBool(true != false);
+
+printBool((true >= false) != (true <= false));
+
+printBool("aaa" > "aa");
+printBool("aaa" >= "aa");
+printBool("aaa" < "aa");
+printBool("aaa" <= "aa");
+printBool("xd" == "xd");
+printBool("xd" != "xd");
+
+printBool(5 * 7 == 7 * 5);

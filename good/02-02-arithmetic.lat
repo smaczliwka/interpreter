@@ -1,0 +1,8 @@
+printInt(1 + 2 * 3 - 7);
+printInt((1 + 2) * (3 - 7));
+printInt(-(10 / 3));
+printInt(10 % 3);
+
+printBool(true || (1 / 0 > 0)); // leniwa ewaluacja
+printBool(true && !false);
+printBool(!(false && (1 / 0 > 0))); // leniwa ewaluacja

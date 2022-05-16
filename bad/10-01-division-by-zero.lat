@@ -1,0 +1,7 @@
+{
+    int x = 10;
+    while (true) {
+        printInt(100 / x);
+        x--;
+    }
+}

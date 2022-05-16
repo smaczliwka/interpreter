@@ -1,0 +1,4 @@
+printInt(17);
+printStr("ala");
+printBool(false);
+printBool(true);

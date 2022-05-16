@@ -1,0 +1,7 @@
+{
+    int x = 7;
+    func bool f(int& x) {
+        return true;
+    }
+    f(x + 19);
+}

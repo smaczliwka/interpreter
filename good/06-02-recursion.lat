@@ -1,0 +1,11 @@
+{
+    func void f(int x) {
+        if (x <= 0) {
+            return;
+        }
+        printInt(x);
+        x = x - 1;
+        return f(x);
+    }
+    f(10);
+}

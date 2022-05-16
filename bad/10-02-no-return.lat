@@ -1,0 +1,13 @@
+{
+    func void f(int x) {
+        if (x > 10) {
+            return;
+        }
+        else {
+            printStr("xd");
+        }
+    }
+    {
+        void x = f(1);
+    }
+}

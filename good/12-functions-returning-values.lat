@@ -1,0 +1,27 @@
+{
+    int x;
+    string s;
+    bool b;
+    void v, u;
+    func int f(int x, int& y, string s, string& p, 
+        bool a, bool& b, void v, void& u) {
+        return x + y;
+    }
+    func string g(int x, int& y, string s, string& p,
+        bool a, bool& b, void v, void& u) {
+        return s;
+    }
+    func bool h(int x, int& y, string s, string& p,
+        bool a, bool& b, void v, void& u) {
+        return a || b;
+    }
+    func void i(int x, int& y, string s, string& p,
+        bool a, bool& b, void v, void& u) {
+        printStr("i called");
+        return;
+    }
+    printInt(f(7, x, "ala", s, true, b, v, u));
+    printStr(g(7, x, "ala", s, true, b, v, u));
+    printBool(h(7, x, "ala", s, true, b, v, u));
+    i(7, x, "ala", s, true, b, v, u);
+}

@@ -1,0 +1,13 @@
+{
+    int x, y = 17;
+    string s = "alamakota", p;
+    bool b, c = y > x;
+    void v, u = v;
+
+    printInt(x);
+    printInt(y);
+    printStr(s);
+    printStr(p);
+    printBool(b);
+    printBool(c);
+}

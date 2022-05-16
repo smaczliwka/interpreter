@@ -1,0 +1,12 @@
+{
+    func void g(int x) {
+        printInt(x + 1);
+        return;
+    }
+    func void f(int x, string y) {
+        printStr(y);
+        g(x);
+        return;
+    }
+    f(7, "ala");
+}
