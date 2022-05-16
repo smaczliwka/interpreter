@@ -1,10 +1,12 @@
 {
     func void g(int x) {
         printInt(x + 1);
+        printStr("\n");
         return;
     }
     func void f(int x, string y) {
         printStr(y);
+        printStr("\n");
         g(x);
         return;
     }

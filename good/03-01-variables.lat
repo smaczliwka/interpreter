@@ -1,13 +1,19 @@
 {
-    int x, y = 17;
+    int x = 10, y = 17, x;
     string s = "alamakota", p;
-    bool b, c = y > x;
+    bool b, c = y > x && b;
     void v, u = v;
 
     printInt(x);
+    printStr("\n");
     printInt(y);
+    printStr("\n");
     printStr(s);
+    printStr("\n");
     printStr(p);
+    printStr("\n");
     printBool(b);
+    printStr("\n");
     printBool(c);
+    printStr("\n");
 }

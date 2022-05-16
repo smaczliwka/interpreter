@@ -4,10 +4,14 @@
         x++;
         y++;
         printInt(x);
+        printStr("\n");
         printInt(y);
+        printStr("\n");
         return;
     }
     f(a, b, a + b + 7);
     printInt(a);
+    printStr("\n");
     printInt(b);
+    printStr("\n");
 }

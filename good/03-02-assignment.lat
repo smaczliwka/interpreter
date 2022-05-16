@@ -1,6 +1,8 @@
 {
     int x = 21, y = 37;
     printInt(x);
+    printStr("\n");
     x = 2 * x + y;
     printInt(x);
+    printStr("\n");
 }

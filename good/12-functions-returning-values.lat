@@ -17,11 +17,14 @@
     }
     func void i(int x, int& y, string s, string& p,
         bool a, bool& b, void v, void& u) {
-        printStr("i called");
+        printStr("i called\n");
         return;
     }
     printInt(f(7, x, "ala", s, true, b, v, u));
+    printStr("\n");
     printStr(g(7, x, "ala", s, true, b, v, u));
+    printStr("\n");
     printBool(h(7, x, "ala", s, true, b, v, u));
+    printStr("\n");
     i(7, x, "ala", s, true, b, v, u);
 }

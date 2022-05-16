@@ -4,6 +4,7 @@
             return;
         }
         printInt(x);
+        printStr("\n");
         x = x - 1;
         return f(x);
     }

@@ -281,39 +281,34 @@ semDF (FDecl _ t id args block) gV gF =
 
 --------------------- PREDEFINIOWANE FUNKCJE DO WYPISYWANIA --------------------------------
 
-printInt :: [ArgVal] -> Store -> IO (Either String (Maybe Value, Store))
-printInt argVals s =
+printVal :: [ArgVal] -> Store -> IO (Either String (Maybe Value, Store))
+printVal argVals s =
     case argVals of
         [Left (IntVal val)] -> do
-            print val
+            putStr $ show val
             pure $ Right (Just VoidVal, s)
-        _ -> pure $ Left "argCheck failed"
-
-printStr :: [ArgVal] -> Store -> IO (Either String (Maybe Value, Store))
-printStr argVals s =
-    case argVals of
         [Left (StrVal val)] -> do
-            print val
+            putStr val
+            pure $ Right (Just VoidVal, s)
+        [Left (BoolVal True)] -> do
+            putStr "true"
+            pure $ Right (Just VoidVal, s)
+        [Left (BoolVal False)] -> do
+            putStr "false"
             pure $ Right (Just VoidVal, s)
         _ -> pure $ Left "argCheck failed"
 
-printBool argVals s =
-    case argVals of
-        [Left (BoolVal val)] -> do
-            print val
-            pure $ Right (Just VoidVal, s)
-        _ -> pure $ Left "argCheck failed"
 
 initFEnv = fromList [
-    (Ident "printInt", (Void Nothing, [ArgCp Nothing (Int Nothing) (Ident "x")],printInt)),
-    (Ident "printStr", (Void Nothing, [ArgCp Nothing (Str Nothing) (Ident "x")], printStr)),
-    (Ident "printBool", (Void Nothing, [ArgCp Nothing (Bool Nothing) (Ident "x")], printBool))
+    (Ident "printInt", (Void Nothing, [ArgCp Nothing (Int Nothing) (Ident "x")],printVal)),
+    (Ident "printStr", (Void Nothing, [ArgCp Nothing (Str Nothing) (Ident "x")], printVal)),
+    (Ident "printBool", (Void Nothing, [ArgCp Nothing (Bool Nothing) (Ident "x")], printVal))
     ]
 
 interpret :: Program -> IO ()
 interpret (Program pos list)  =
     case list of
-        [] -> pure ()
+        [] -> putChar '\n'
         (stmt : rest) -> do
             res <- semS stmt empty initFEnv empty
             case res of

@@ -1,6 +1,8 @@
 if (0 > 1) {
     printBool(true);
+    printStr("\n");
 }
 else {
     printBool(false);
+    printStr("\n");
 }

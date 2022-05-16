@@ -13,9 +13,12 @@
             return g();
         }
         printStr(h());
+        printStr("\n");
         printStr(i());
+        printStr("\n");
         return;
     }
     f();
     printStr(g());
+    printStr("\n");
 }

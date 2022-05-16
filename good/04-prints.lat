@@ -1,4 +1,8 @@
 printInt(17);
+printStr("\n");
 printStr("ala");
+printStr("\n");
 printBool(false);
+printStr("\n");
 printBool(true);
+printStr("\n");

@@ -5,12 +5,15 @@
         return 10 * y;
     }
     printInt(x);
+    printStr("\n");
     {
         int x = x + 1;
         func int f(int z) {
             return 100 * z;
         }
         printInt(f(x));
+        printStr("\n");
     }
     printInt(f(x));
+    printStr("\n");
 }

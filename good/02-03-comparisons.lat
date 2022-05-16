@@ -1,17 +1,31 @@
 printBool(true > false);
+printStr("\n");
 printBool(true >= false);
+printStr("\n");
 printBool(true < false);
+printStr("\n");
 printBool(true <= false);
+printStr("\n");
 printBool(true == false);
+printStr("\n");
 printBool(true != false);
+printStr("\n");
 
 printBool((true >= false) != (true <= false));
+printStr("\n");
 
 printBool("aaa" > "aa");
+printStr("\n");
 printBool("aaa" >= "aa");
+printStr("\n");
 printBool("aaa" < "aa");
+printStr("\n");
 printBool("aaa" <= "aa");
+printStr("\n");
 printBool("xd" == "xd");
+printStr("\n");
 printBool("xd" != "xd");
+printStr("\n");
 
 printBool(5 * 7 == 7 * 5);
+printStr("\n");
