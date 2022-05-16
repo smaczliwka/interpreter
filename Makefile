@@ -1,8 +1,8 @@
+SHELL=/bin/bash
 all:
 	-mkdir build
 	cd src && \
 	bnfc --functor MyLatte.cf && \
-	#sed -i '/fail/d' ErrM.hs && \
 	happy -gca ParMyLatte.y && \
 	alex -g LexMyLatte.x && \
 	ghc --make Main.hs -odir ../build -hidir ../build -o ../interpreter
